@@ -109,5 +109,3 @@ On first desktop visit, BusBuddy shows a one-time hint card for mobile emulation
 - Add multilingual voice-first assistance.
 - Add confidence calibration from historical outcomes.
 - Add richer incident/weather disruption handling.
-
-## Final Edits
