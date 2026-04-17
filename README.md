@@ -24,13 +24,15 @@ BusBuddy combines deterministic local scoring with AI-powered explanations:
 
 ## Key Features
 
-- Fixed-width mobile-style app canvas for both desktop and mobile.
-- Live Boarding View map panel with stop selection.
+- Narrow mobile-style app canvas on desktop for app-like preview.
+- Google Maps-powered Boarding View with stop markers and transit directions.
 - Scenario + condition controls (profile, time, weather, presets).
 - Top Recommendation decision card.
 - Approaching bus cards with Board/Wait/Skip badges.
 - Bus detail sheet with factors + AI explanation.
 - Ask BusBuddy AI panel with contextual Q&A.
+- Desktop-only atmospheric gradient shell for polished large-screen presentation.
+- One-time desktop hint to open browser mobile emulation quickly.
 - Firebase Hosting deployment.
 
 ## How Recommendation Works
@@ -79,6 +81,7 @@ Important: This repository does not claim live BMTC integration.
 
 - React 18 + Vite + TypeScript
 - Tailwind CSS + Radix UI primitives
+- Google Maps JavaScript API via `@react-google-maps/api`
 - Firebase Hosting
 - Firebase AI Logic Web SDK + Gemini Developer API backend
 - Framer Motion (detail/interaction motion)
@@ -118,7 +121,13 @@ On Windows PowerShell:
 Copy-Item .env.example .env.local
 ```
 
-3. Fill `.env.local` with your Firebase web config + model.
+3. Fill `.env.local` with your Firebase web config, Gemini model, and Google Maps key(s).
+
+For map rendering and directions, use a browser-restricted key with at least:
+
+- Maps JavaScript API
+- Places API
+- Directions API
 
 4. Start dev server:
 
@@ -143,8 +152,22 @@ Expected keys:
 - `VITE_FIREBASE_MESSAGING_SENDER_ID`
 - `VITE_FIREBASE_APP_ID`
 - `VITE_GEMINI_MODEL` (example: `gemini-2.5-flash-lite`)
+- `VITE_GOOGLE_MAPS_API_KEY`
+- `VITE_GOOGLE_PLACES_DIRECTIONS_API_KEY`
+
+Notes:
+
+- `VITE_GOOGLE_PLACES_DIRECTIONS_API_KEY` is used first for map loading.
+- If it is not set, BusBuddy falls back to `VITE_GOOGLE_MAPS_API_KEY`.
 
 Template file: [.env.example](.env.example)
+
+## Desktop Testing Tip
+
+On first desktop visit, BusBuddy shows a one-time hint card for mobile emulation.
+
+- Press `Ctrl + Shift + I`
+- Then press `Ctrl + Shift + M`
 
 ## Build
 
