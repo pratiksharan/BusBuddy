@@ -155,13 +155,6 @@ Expected keys:
 - `VITE_GOOGLE_MAPS_API_KEY`
 - `VITE_GOOGLE_PLACES_DIRECTIONS_API_KEY`
 
-Notes:
-
-- `VITE_GOOGLE_PLACES_DIRECTIONS_API_KEY` is used first for map loading.
-- If it is not set, BusBuddy falls back to `VITE_GOOGLE_MAPS_API_KEY`.
-
-Template file: [.env.example](.env.example)
-
 ## Desktop Testing Tip
 
 On first desktop visit, BusBuddy shows a one-time hint card for mobile emulation.
@@ -181,24 +174,6 @@ Optional local preview:
 npm run preview
 ```
 
-## Deploy (Firebase Hosting)
-
-1. Authenticate and select project:
-
-```bash
-npx firebase-tools login
-npx firebase-tools use model-wave-493404-c4
-```
-
-2. Build and deploy:
-
-```bash
-npm run build
-npx firebase-tools deploy --only hosting
-```
-
-Hosting config is in [firebase.json](firebase.json).
-
 ## Current MVP Limitations
 
 - Uses simulated transit data (not live bus telemetry).
@@ -213,7 +188,3 @@ Hosting config is in [firebase.json](firebase.json).
 - Add multilingual voice-first assistance.
 - Add confidence calibration from historical outcomes.
 - Add richer incident/weather disruption handling.
-
-## Hackathon Note
-
-BusBuddy is a hackathon prototype focused on fast validation of boarding decision support UX using deterministic local logic + AI explanation.
