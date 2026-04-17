@@ -1,74 +1,109 @@
 # BusBuddy
 
-BusBuddy is a decision-support web app for Bengaluru commuters. It helps riders decide whether to board, wait, or skip an incoming bus.
+BusBuddy is a map-first web app that helps Bengaluru commuters decide whether to board, wait, or skip an approaching bus.
 
 Live demo: https://model-wave-493404-c4.web.app/
 
-Status: Hackathon MVP. Core decision logic is deterministic and local; AI is used only for explanations.
+## Problem Statement
 
-## Core Experience
+At crowded bus stops, commuters make fast decisions with incomplete information:
 
-- Shows approaching buses for a selected stop.
-- Computes boarding chance and a recommendation per bus: Board, Wait, or Skip.
-- Highlights a top recommendation.
-- Provides reasoned bus details and an Ask BusBuddy follow-up panel.
-- Displays route and stop context on a Google Maps view.
+- Is this bus too full to board?
+- Should I wait for the next one?
+- Is trying now worth the risk?
 
-## Decision Model (Local and Deterministic)
+The MVP focuses on converting noisy commute context into one clear action: Board, Wait, or Skip.
 
-Recommendations are computed locally from simulated route and scenario data.
+## Solution Overview
 
-Factors include:
+BusBuddy combines deterministic local scoring with AI-powered explanations:
 
-- bus crowding and occupancy
-- time/weather conditions
-- route and urgency context
-- rider profile and scenario presets
+- A local rules-based scorer estimates boarding chance and recommendation per bus.
+- Gemini (through Firebase AI Logic) turns model/context output into short, user-friendly explanations.
+- The UI surfaces a top recommendation, route-level cards, and a contextual Ask panel.
 
-Chance bands are mapped to Board/Wait/Skip thresholds. AI does not determine the recommendation.
+## Key Features
 
-Implementation references:
+- Narrow mobile-style app canvas on desktop for app-like preview.
+- Google Maps-powered Boarding View with stop markers and transit directions.
+- Scenario + condition controls (profile, time, weather, presets).
+- Top Recommendation decision card.
+- Approaching bus cards with Board/Wait/Skip badges.
+- Bus detail sheet with factors + AI explanation.
+- Ask BusBuddy AI panel with contextual Q&A.
+- Desktop-only atmospheric gradient shell for polished large-screen presentation.
+- One-time desktop hint to open browser mobile emulation quickly.
+- Firebase Hosting deployment.
 
-- [src/data/mockData.ts](src/data/mockData.ts)
-- [src/hooks/useAppState.ts](src/hooks/useAppState.ts)
-- [src/services/scoring.ts](src/services/scoring.ts)
+## How Recommendation Works
 
-## AI Scope
+The Board/Wait/Skip output is deterministic and local.
 
-AI is used for explanation quality, not decision logic:
+- Source data: local simulated buses/scenarios.
+- Scoring behavior: penalties and adjustments are applied from context and profile.
+- Recommendation thresholds are derived from computed boarding chance bands.
+- No backend scoring service is used in this MVP.
 
-- selected bus explanation
-- short bus-card summaries
-- Ask BusBuddy responses
+Current implementation source of truth:
 
-Service wiring:
+- Local data and scenario generation: [src/data/mockData.ts](src/data/mockData.ts)
+- App state and filter/scenario selection: [src/hooks/useAppState.ts](src/hooks/useAppState.ts)
+- Scoring service wrapper (local): [src/services/scoring.ts](src/services/scoring.ts)
 
-- [src/services/firebase.ts](src/services/firebase.ts)
-- [src/services/aiExplanation.ts](src/services/aiExplanation.ts)
+## What AI Is Used For
 
-If Gemini or Firebase config is unavailable, local fallback text is returned.
+AI is used for explanation and assistant UX, not for core scoring.
 
-## Data Boundaries
+- Selected bus explanation
+- Short bus-card summaries
+- Ask BusBuddy user queries
 
-This repository uses simulated transit data. It does not include live BMTC telemetry integration.
+AI wiring details:
+
+- Firebase app/env bootstrap: [src/services/firebase.ts](src/services/firebase.ts)
+- Gemini + cache/dedupe + fallback logic: [src/services/aiExplanation.ts](src/services/aiExplanation.ts)
+
+If Gemini is unavailable or Firebase env vars are missing, local fallbacks are used.
+
+## MVP Data Source
+
+This prototype uses simulated transit data in code.
+
+Why simulated:
+
+- Hackathon speed and reliability
+- No live transit API integration required for MVP
+- Keeps demo deterministic and reproducible
+
+Important: This repository does not claim live BMTC integration.
 
 ## Tech Stack
 
-- React 18, Vite, TypeScript
-- Tailwind CSS and Radix UI
-- Google Maps JavaScript API via @react-google-maps/api
-- Firebase AI Logic Web SDK with Gemini
+- React 18 + Vite + TypeScript
+- Tailwind CSS + Radix UI primitives
+- Google Maps JavaScript API via `@react-google-maps/api`
 - Firebase Hosting
+- Firebase AI Logic Web SDK + Gemini Developer API backend
+- Framer Motion (detail/interaction motion)
 
-## Limitations
+## Desktop Testing Tip
 
-- Simulated data only
-- No rider accounts or persisted personalization
-- No backend analytics pipeline
-- No historical calibration for uncertainty
+On first desktop visit, BusBuddy shows a one-time hint card for mobile emulation.
 
-## Roadmap
+- Press `Ctrl + Shift + I`
+- Then press `Ctrl + Shift + M`
 
-- Integrate live transit and crowd signals
-- Add personalized commute memory
-- Improve confidence calibration with real outcomes
+## Current MVP Limitations
+
+- Uses simulated transit data (not live bus telemetry).
+- No rider accounts or personalization persistence.
+- No backend analytics pipeline.
+- No operational ETA uncertainty model beyond local heuristics.
+
+## Future Improvements
+
+- Integrate live transit feeds and crowd signals.
+- Add route history and personal commute preferences.
+- Add multilingual voice-first assistance.
+- Add confidence calibration from historical outcomes.
+- Add richer incident/weather disruption handling.
