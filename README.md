@@ -86,75 +86,6 @@ Important: This repository does not claim live BMTC integration.
 - Firebase AI Logic Web SDK + Gemini Developer API backend
 - Framer Motion (detail/interaction motion)
 
-## Project Structure
-
-```text
-src/
-  components/        # UI components (map, selectors, buses, detail, assistant)
-  data/              # Local mock stops, scenarios, buses
-  hooks/             # App state + shared hooks
-  lib/               # Utilities
-  pages/             # Main screen entry
-  services/          # Firebase setup, AI logic, scoring service wrapper
-  test/              # Vitest setup/examples
-  types/             # Shared domain types
-  utils/             # Display label helpers
-```
-
-## Local Setup
-
-1. Install dependencies:
-
-```bash
-npm install
-```
-
-2. Create local env file from template:
-
-```bash
-cp .env.example .env.local
-```
-
-On Windows PowerShell:
-
-```powershell
-Copy-Item .env.example .env.local
-```
-
-3. Fill `.env.local` with your Firebase web config, Gemini model, and Google Maps key(s).
-
-For map rendering and directions, use a browser-restricted key with at least:
-
-- Maps JavaScript API
-- Places API
-- Directions API
-
-4. Start dev server:
-
-```bash
-npm run dev
-```
-
-5. Open:
-
-```text
-http://localhost:5173
-```
-
-## Environment Variables
-
-Expected keys:
-
-- `VITE_FIREBASE_API_KEY`
-- `VITE_FIREBASE_AUTH_DOMAIN`
-- `VITE_FIREBASE_PROJECT_ID`
-- `VITE_FIREBASE_STORAGE_BUCKET`
-- `VITE_FIREBASE_MESSAGING_SENDER_ID`
-- `VITE_FIREBASE_APP_ID`
-- `VITE_GEMINI_MODEL` (example: `gemini-2.5-flash-lite`)
-- `VITE_GOOGLE_MAPS_API_KEY`
-- `VITE_GOOGLE_PLACES_DIRECTIONS_API_KEY`
-
 ## Desktop Testing Tip
 
 On first desktop visit, BusBuddy shows a one-time hint card for mobile emulation.
@@ -162,17 +93,22 @@ On first desktop visit, BusBuddy shows a one-time hint card for mobile emulation
 - Press `Ctrl + Shift + I`
 - Then press `Ctrl + Shift + M`
 
-## Build
+## Deploy (Firebase Hosting)
+
+1. Authenticate and select project:
 
 ```bash
-npm run build
+npx firebase-tools login
+npx firebase-tools use model-wave-493404-c4
 ```
 
-Optional local preview:
+2. Deploy:
 
 ```bash
-npm run preview
+npx firebase-tools deploy --only hosting
 ```
+
+Hosting config is in [firebase.json](firebase.json).
 
 ## Current MVP Limitations
 
