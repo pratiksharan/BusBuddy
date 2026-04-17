@@ -81,7 +81,9 @@ Important: This repository does not claim live BMTC integration.
 
 - React 18 + Vite + TypeScript
 - Tailwind CSS + Radix UI primitives
-- Google Maps JavaScript API via `@react-google-maps/api`
+- Google Maps JavaScript API 
+- Directions API
+- Places API
 - Firebase Hosting
 - Firebase AI Logic Web SDK + Gemini Developer API backend
 - Framer Motion (detail/interaction motion)
@@ -107,3 +109,5 @@ On first desktop visit, BusBuddy shows a one-time hint card for mobile emulation
 - Add multilingual voice-first assistance.
 - Add confidence calibration from historical outcomes.
 - Add richer incident/weather disruption handling.
+
+## Final Edits
