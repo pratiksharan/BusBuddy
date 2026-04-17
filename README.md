@@ -93,23 +93,6 @@ On first desktop visit, BusBuddy shows a one-time hint card for mobile emulation
 - Press `Ctrl + Shift + I`
 - Then press `Ctrl + Shift + M`
 
-## Deploy (Firebase Hosting)
-
-1. Authenticate and select project:
-
-```bash
-npx firebase-tools login
-npx firebase-tools use model-wave-493404-c4
-```
-
-2. Deploy:
-
-```bash
-npx firebase-tools deploy --only hosting
-```
-
-Hosting config is in [firebase.json](firebase.json).
-
 ## Current MVP Limitations
 
 - Uses simulated transit data (not live bus telemetry).
